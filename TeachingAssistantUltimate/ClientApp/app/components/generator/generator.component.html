@@ -1,0 +1,59 @@
+﻿<h1>Generate questions from bank</h1>
+<dl class="dl-horizontal h3">
+    <dt>Subject</dt>
+    <dd>{{subject.subject}}</dd>
+    <dt>Number</dt>
+    <dd>{{subject.count}}</dd>
+</dl>
+<details open>
+    <summary>Instructions</summary>
+    The total of the options should be equal to hundred
+</details>
+<div class="form-group">
+    <label class="control-label col-md-3">Total Questions</label>
+    <div class="col-md-3">
+        <input class="form-control" placeholder="the maximum number of questions to fetch. Must be equal to the sum of questions to fetch from each topic" title="the maximum number of questions to fetch. Must be equal to the sum of questions to fetch from each topic" [(ngModel)]="max" type="number" />
+    </div>
+</div>
+<table class="table table-responsive table-striped">
+    <caption>Set number of questions to fetch from each topic</caption>
+    <thead>
+        <tr>
+            <th>Topic</th>
+            <th>Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let t of topics;let ix=index">
+            <td>
+                <label class="label-info">{{t.topic}}</label>
+            </td>
+            <td>
+                <input type="number" placeholder="" class="form-control" name="number{{ix}}" id="number{{ix}}" [(ngModel)]="t.number" />
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td> <button class="btn" [ngClass]="total() ? 'btn-success' : 'btn-danger'" [disabled]="!total()" (click)="generate(topics)">Generate</button></td>
+        </tr>
+    </tfoot>
+</table>
+<div class="btn-group" *ngIf="questions.length>0">
+    <button (click)="print(header)" class="btn btn-primary"><span class="glyphicon glyphicon-print"></span> Print</button>
+</div>
+<div class="input-group" *ngIf="questions.length>0">
+    <span class="input-group-addon" id="head.span" title="Set header for printing">Header </span>
+    <input type="text" class="form-control" id="header" name="header" [(ngModel)]="header" required placeholder="Header for printing">
+</div>
+<div id="print" *ngIf="questions.length>0">
+    <ol>
+        <li *ngFor="let q of questions">
+            <div [innerHtml]="q.question" style="margin:10px 0 0 0"></div>
+            <ol class="list-group" style="list-style:upper-alpha; margin:0 0 0 15px">
+                <li *ngFor="let o of q!.options" class="">{{o}}</li>
+            </ol>
+        </li>
+    </ol>
+</div>

@@ -1,0 +1,59 @@
+﻿<div class="row">
+    <div class="col-md-4">
+        <article>
+            <section class="">
+                <h2 class="h2">Setting up</h2>
+                <p>The database is first created when the application first launches and subsequently recreated if the database is missing. There is no need to do anything thereof</p>
+                <p>
+                    Add the <a [routerLink]="['/subjects']">Subjects</a> and the  <a [routerLink]="['/classes']">Classes</a> you teach
+                </p>
+                <p>Once the above steps are done, you are more than ready to explore the application in full</p>
+            </section>
+            <section>
+                <h2 class="h2">Adding students</h2>
+                <p>Upload the list of students with an excel file. Simple as that . However a pattern must be observed to create the understanding between you and the software</p>
+                <ul class="list-group">
+                    <li class="list-group-item-heading">Uploading students data instructions</li>
+                    <li class="list-group-item">Have an excel sheets that contains the list of students</li>
+                    <li class="list-group-item-warning">There must be no header of any sort. They will be included as students. Do not provide a header</li>
+                    <li class="list-group-item-success">The system reads all cells for which it can read data in the cell from columns A and B. All other columns will be ignored</li>
+                    <li class="list-group-item">To make life easier for yourself and the system, follow the instructions given</li>
+                </ul>
+            </section>
+        </article>
+    </div>
+    <div class="col-md-4">
+        <article>
+            <section>
+                <h2>Managing the classes</h2>
+                <p>When adding classes, you need to supply some parameter which will be used later by the application to help you do things easily</p>
+                <dl class="dl-horizontal">
+                    <dt>Class Name</dt>
+                    <dd>The name of the class as know in your school or institution. The user interface will tell you on the valid values</dd>
+                    <dt>Prefix</dt>
+                    <dd>The prefix is all the characters that precede the actual number of the student. E.g. "MS/2019/045" where "MS/2019/" is the prefix for all students in that class and the 045 is the actual number of the student. You would therefore store the "MS/2019/" as the prefix for all students in that class.</dd>
+                    <dt>Padding</dt>
+                    <dd> The padding is the number of zeros that precede the actual number. While the developer does not personally find that behavior useful, it is a common practice. Depending on the estimated number of students, some institution pad the numbers of the students with zeros as in the example given above. The number of the student was given as 045; a padding of 1. This can be inferred that if the number ranged between 1 and 9, two zeros would have been padded to the left of the number. The user is expected to provide the padding that is used in the institution where he/she works. Default is 0, meaning no padding</dd>
+                </dl>
+            </section>
+        </article>
+    </div>
+    <div class="col-md-4">
+        <article>
+            <section>
+                <h2>Adding results</h2>
+                <p>From the classes page, you will have two options "Add results" button and "Smart Entry"</p>
+            </section>
+            <section>
+                <h2>Add Results</h2>
+                <p>This give the old familiar excel interface to add your results. The names and index number of the students in the class are generated and text boxes for the score added. The list is generated orderly for entry. Validation rules are enforced before saving the data is allowed.</p>
+                <p>This is suitable for small number of students or when the index number of the students do not follow a particular pattern</p>
+            </section>
+            <section>
+                <h2>Smart Entry</h2>
+                <p>Based on the number part, the index number of the student can be inferred and used to enter the score. The user simply provides the number part, say 45, and the program will infer that, it should pad two zeros and attach the prefix of the class. Should the number match a valid student, the results are added, else you will be prompted to correct the anomaly</p>
+                <p>Smart entry is faster when processing large numbers of students where most of them have a predictable index number. In those occasions where some of the students do not have the class pattern, the full index number should be provided and there would be no smart inference</p>
+            </section>
+        </article>
+    </div>
+</div>

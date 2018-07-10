@@ -1,0 +1,41 @@
+﻿<title>Edit {{type.assessmentType}}</title>
+<h1>Edit {{type.assessmentType}}</h1>
+<form id="form" name="form" [formGroup]="form" (submit)="edit(form.value)" class="form-horizontal">
+    <fieldset>
+        <legend>Make your changes as appropriate</legend>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="assessmentType">Type</label>
+            <div class="col-md-6" [ngClass]="form.controls.assessmentType?.errors ? 'has-error' : 'has-success'">
+                <input type="text"
+                       class="form-control"
+                       id="assessmentType"
+                       title="new name for assessment type"
+                       formControlName="assessmentType"
+                       placeholder="Enter name of assessment type">
+            </div>
+            <span [ngClass]="form.controls.assessmentType.errors?.maxlength ? 'text-danger' : ''" *ngIf="form.controls.assessmentType.errors?.maxlength">The maximum length is {{form.controls.assessmentType.errors.maxlength.requiredLength}} characters: Current is {{form.controls.assessmentType.errors.maxlength.actualLength}}</span>
+            <span [ngClass]="form.controls.assessmentType.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.assessmentType.errors?.required">Enter assessmentType</span>
+            <span [ngClass]="form.controls.assessmentType.errors?.minlength ? 'text-danger' : ''" *ngIf="form.controls.assessmentType.errors?.minlength">The minimum length is {{form.controls.assessmentType.errors.minlength.requiredLength}} characters: Current is {{form.controls.assessmentType.errors.minlength.actualLength}}</span>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="total">Total</label>
+            <div class="col-md-6" [ngClass]="form.controls.total?.errors ? 'has-error' : 'has-success'">
+                <input type="text"
+                       class="form-control"
+                       id="total"
+                       title="Total marks for which this assessment will be converted to"
+                       formControlName="total"
+                       placeholder="Enter total score for this type">
+            </div>
+            <span [ngClass]="form.controls.total.errors?.maxlength ? 'text-danger' : ''" *ngIf="form.controls.total.errors?.max">The maximum allowed is {{form.controls.total.errors.max.max}}</span>
+            <span [ngClass]="form.controls.total.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.total.errors?.required">Enter total</span>
+            <span [ngClass]="form.controls.total.errors?.minlength ? 'text-danger' : ''" *ngIf="form.controls.total.errors?.minlength">The minimum value allowed is {{form.controls.total.errors.min.min}}</span>
+        </div>
+        <div class="col-md-offset-2 btn-group">
+            <button [disabled]="form.invalid || hand.processing" type="submit" [ngClass]="form.invalid ? 'btn-danger' : 'btn-success'" class="btn"><span class="glyphicon glyphicon-edit"> Edit</span></button>
+            <button class="btn btn-warning" (click)="delete()" title="delete this assessment type"><span class="glyphicon glyphicon-remove-sign"> Delete</span></button>
+        </div>
+        <div [ngClass]="hand.error ? 'alert-danger' : 'alert-info'">{{hand.message}}</div>
+
+    </fieldset>
+</form>

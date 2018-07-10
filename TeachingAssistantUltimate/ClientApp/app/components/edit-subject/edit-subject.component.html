@@ -1,0 +1,25 @@
+﻿<title>Edit {{subject.subject}}</title>
+<h1 class="h1">Edit {{subject.subject}}</h1>
+<form id="form" name="form" [formGroup]="form" (submit)="edit(form.value)" class="form-horizontal">
+    <fieldset>
+        <legend>Editing Mode</legend>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="subject">Subject</label>
+            <div class="col-md-6" [ngClass]="form.controls.subject?.errors ? 'has-error' : 'has-success'">
+                <input type="text"
+                       class="form-control"
+                       id="subject"
+                       title="new subject name here"
+                       formControlName="subject"
+                       placeholder="subject">
+            </div>
+            <span [ngClass]="form.controls.subject.errors?.maxlength ? 'text-danger' : ''" *ngIf="form.controls.subject.errors?.maxlength">The maximum length is {{form.controls.subject.errors.maxlength.requiredLength}} characters: Current is {{form.controls.subject.errors.maxlength.actualLength}}</span>
+            <span [ngClass]="form.controls.subject.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.subject.errors?.required">Enter subject</span>
+            <span [ngClass]="form.controls.subject.errors?.minlength ? 'text-danger' : ''" *ngIf="form.controls.subject.errors?.minlength">The minimum length is {{form.controls.subject.errors.minlength.requiredLength}} characters: Current is {{form.controls.subject.errors.minlength.actualLength}}</span>
+        </div>
+        <div class="col-md-offset-3 btn-group">
+            <button [disabled]="form.invalid || hand.processing" type="submit" [ngClass]="form.invalid ? 'btn-danger' : 'btn-success'" class="btn"><span class="glyphicon glyphicon-edit"></span> Edit Subject</button>
+        </div>
+        <div [ngClass]="hand.error ? 'alert-danger' : 'alert-info'">{{hand.message}}</div>
+    </fieldset>
+</form>

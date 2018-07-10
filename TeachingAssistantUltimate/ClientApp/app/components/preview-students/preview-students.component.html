@@ -1,0 +1,27 @@
+﻿<title>Preview student</title>
+<h1>Preview the list of students before saving</h1>
+<dl class="dl-horizontal">
+    <dt>Class</dt>
+    <dd>{{_class.className}}</dd>
+    <dt>Prefix</dt>
+    <dd>{{_class.indexPrefix}}</dd>
+</dl>
+
+<div class="btn-group">
+    <button class="btn btn-success" type="button" (click)="save()"><span class="glyphicon glyphicon-save-file"></span> Save</button>
+    <button class="btn btn-secondary" [routerLink]="['/classes']"><span class="glyphicon glyphicon-stop"></span> Cancel</button>
+</div>
+<table class="table table-bordered table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Index Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let s of students">
+            <td>{{s.name}}</td>
+            <td>{{s.indexNumber}}</td>
+        </tr>
+    </tbody>
+</table>

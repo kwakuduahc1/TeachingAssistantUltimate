@@ -1,0 +1,125 @@
+﻿<title>Smart entry of results</title>
+<h1 class="h1">Smart results entry</h1>
+<form name="form" (submit)="addScore(form.value)" id="form" [formGroup]="form" class="form-horizontal">
+    <fieldset>
+        <legend>Provide the initial details</legend>
+        <div class="form-group">
+            <label class="col-md-2 control-label" aria-label="sid" for="sid">Select Subject</label>
+            <div class="col-md-6" aria-labelledby="sid" [ngClass]="form.controls.sid?.errors ? 'has-error' : 'has-success'">
+                <select aria-controls="sid" aria-required="true" aria-readonly="true" class="form-control"
+                        id="sid"
+                        title="The subject for which the score is being recorded"
+                        formControlName="sid">
+                    <option *ngFor="let s of subjects" [ngValue]="s.subjectsID">{{s.subject}} : {{s.subjectCode}}</option>
+                </select>
+            </div>
+            <span [ngClass]="form.controls.sid.errors?.sid ? 'text-danger' : ''" *ngIf="form.controls.sid.errors?.manx">The maximum {{form.controls.sid.errors.sid.sid}}</span>
+            <span [ngClass]="form.controls.sid.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.sid.errors?.required">Select a subject</span>
+            <span [ngClass]="form.controls.sid.errors?.min ? 'text-danger' : ''" *ngIf="form.controls.sid.errors?.min">The minimum {{form.controls.sid.errors.min.min}}</span>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" aria-label="type" for="type">Select type</label>
+            <div class="col-md-6" aria-labelledby="type" [ngClass]="form.controls.type?.errors ? 'has-error' : 'has-success'">
+                <select aria-required="true" aria-selected="false" class="form-control"
+                        id="type"
+                        title="The type for which the score is being recorded"
+                        formControlName="type">
+                    <option *ngFor="let t of types" [ngValue]="t.assessmentTypesID">{{t.assessmentType}}</option>
+                </select>
+            </div>
+            <span [ngClass]="form.controls.type.errors?.type ? 'text-danger' : ''" *ngIf="form.controls.type.errors?.manx">The maximum {{form.controls.type.errors.type.type}}</span>
+            <span [ngClass]="form.controls.type.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.type.errors?.required">Select a type</span>
+            <span [ngClass]="form.controls.type.errors?.min ? 'text-danger' : ''" *ngIf="form.controls.type.errors?.min">The minimum {{form.controls.type.errors.min.min}}</span>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" aria-label="max" for="max">Max Score</label>
+            <div class="col-md-6" aria-labelledby="max" [ngClass]="form.controls.max?.errors ? 'has-error' : 'has-success'">
+                <input aria-required="true" type="number"
+                       class="form-control"
+                       id="max"
+                       title="the maximum score a student should get for this examination"
+                       formControlName="max"
+                       placeholder="max score of the test">
+            </div>
+            <span [ngClass]="form.controls.max.errors?.max ? 'text-danger' : ''" *ngIf="form.controls.max.errors?.manx">The maximum {{form.controls.max.errors.max.max}}</span>
+            <span [ngClass]="form.controls.max.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.max.errors?.required">Enter max score</span>
+            <span [ngClass]="form.controls.max.errors?.min ? 'text-danger' : ''" *ngIf="form.controls.max.errors?.min">The minimum {{form.controls.max.errors.min.min}}</span>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" aria-label="" for="tag">Tag</label>
+            <div class="col-md-6" aria-labelledby="tag" [ngClass]="form.controls.tag?.errors ? 'has-error' : 'has-success'">
+                <input type="text"
+                       class="form-control"
+                       id="tag"
+                       title="Add a tag for this assessment. This tags will be used to recollect this exams from the list. Since you can add more than one quiz, the tag will be used to find this session"
+                       formControlName="tag"
+                       placeholder="tag for the examination">
+            </div>
+            <span [ngClass]="form.controls.tag.errors?.maxlength ? 'text-danger' : ''" *ngIf="form.controls.tag.errors?.maxlength">The maximum length is {{form.controls.tag.errors.maxlength.requiredLength}} characters: Current is {{form.controls.tag.errors.maxlength.actualLength}}</span>
+            <span [ngClass]="form.controls.tag.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.tag.errors?.required">Enter tag</span>
+            <span [ngClass]="form.controls.tag.errors?.minlength ? 'text-danger' : ''" *ngIf="form.controls.tag.errors?.minlength">The minimum length is {{form.controls.tag.errors.minlength.requiredLength}} characters: Current is {{form.controls.tag.errors.minlength.actualLength}}</span>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" aria-label="number" for="number">Number</label>
+            <div class="col-md-6" aria-labelledby="number" [ngClass]="form.controls.number?.errors ? 'has-error' : 'has-success'">
+                <input aria-required="true" aria-labelledby="number" role="textbox" type="text"
+                       class="form-control"
+                       id="number"
+                       title="the number of the student, without the preceding zeros"
+                       formControlName="number"
+                       placeholder="number of the student">
+            </div>
+            <span [ngClass]="form.controls.number.errors?.max ? 'text-danger' : ''" *ngIf="form.controls.number.errors?.manx">The maximum {{form.controls.number.errors.max.max}}</span>
+            <span [ngClass]="form.controls.number.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.number.errors?.required">Enter number</span>
+            <span [ngClass]="form.controls.number.errors?.min ? 'text-danger' : ''" *ngIf="form.controls.number.errors?.min">The minimum {{form.controls.number.errors.min.min}}</span>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" aria-label="score" for="score">Score</label>
+            <div class="col-md-6" aria-labelledby="score" [ngClass]="form.controls.score?.errors ? 'has-error' : 'has-success'">
+                <input aria-required="true" type="number"
+                       class="form-control"
+                       id="score"
+                       title="the score of the student"
+                       formControlName="score"
+                       placeholder="score of the student">
+            </div>
+            <span [ngClass]="form.controls.score.errors?.max ? 'text-danger' : ''" *ngIf="form.controls.score.errors?.manx">The maximum {{form.controls.score.errors.max.max}}</span>
+            <span [ngClass]="form.controls.score.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.score.errors?.required">Enter score</span>
+            <span [ngClass]="form.controls.score.errors?.min ? 'text-danger' : ''" *ngIf="form.controls.score.errors?.min">The minimum {{form.controls.score.errors.min.min}}</span>
+        </div>
+        <div class="col-md-offset-2 btn-group">
+            <button title="Add results button. Using smart programming, clicking this button will infer the index number of the student by typing only the last digits of the student's index number. The index number is then attached ot the score and added to the list below" aria-label="add results button" [disabled]="form.invalid || hand.processing" type="submit" [ngClass]="form.invalid ? 'btn-danger' : 'btn-success'" class="btn"><span class="glyphicon glyphicon-addition-sign"> Add Results</span></button>
+        </div>
+        <div [ngClass]="hand.error ? 'alert-danger' : 'alert-info'">{{hand.message}}</div>
+    </fieldset>
+</form>
+<h2 class="h2" [hidden]="results.length<1">Results of students</h2>
+<div [hidden]="!canUpload" class="" >
+    <button id="upload" name="upload" class="btn btn-primary" title="Save button. If the actions are successful after clicking this button, you will be routed to the class page" (click)="addResults()"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+</div>
+<table [hidden]="results.length<1" class="table table-striped table-bordered table-hover">
+    <caption class="caption">Results of students in {{_class.className}}</caption>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Index Number</th>
+            <th>Score</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let r of results">
+            <td>{{r.name}}</td>
+            <td>{{r.indexNumber}}</td>
+            <td>{{r.score}}</td>
+            <td>
+                <button class="btn btn-danger" (click)="remove(r)"><span class="glyphicon glyphicon-remove-sign"></span> Remove</button>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><button class="btn btn-success" (click)="save(form.value)"><span class="glyphicon glyphicon-floppy-save"></span> Save Results</button></td>
+        </tr>
+    </tfoot>
+</table>

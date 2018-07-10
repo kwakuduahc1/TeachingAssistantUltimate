@@ -1,0 +1,105 @@
+﻿<title>Add results</title>
+<h1>Add student results</h1>
+<dl class="dl-horizontal">
+    <dt>Class</dt>
+    <dd>{{_class.className}}</dd>
+    <dt>Prefix</dt>
+    <dd>{{_class.indexPrefix}}</dd>
+</dl>
+<form id="form" [hidden]="!status" name="form" [formGroup]="form" class="form-horizontal">
+    <fieldset>
+        <legend>Select the initial data</legend>
+        <div class="form-group">
+            <label class="col-md-2 control-label" aria-label="" for="subjectsID">Subject</label>
+            <div class="col-md-6" aria-labelledby="subjectsID" [ngClass]="form.controls.subjectsID?.errors ? 'has-error' : 'has-success'">
+                <select class="form-control"
+                        id="subjectsID"
+                        title="select the subject for which you are recording this score"
+                        formControlName="subjectsID"
+                        placeholder="subjectsID">
+                    <option [ngValue]="s.subjectsID" *ngFor="let s of subjects">{{s.subject}} - Code:{{s.subjectCode}}</option>
+                </select>
+            </div>
+            <span [ngClass]="form.controls.subjectsID.errors?.maxlength ? 'text-danger' : ''" *ngIf="form.controls.subjectsID.errors?.maxlength">The maximum length is {{form.controls.subjectsID.errors.max.max}} characters: Current is {{form.controls.subjectsID.errors.max.max}}</span>
+            <span [ngClass]="form.controls.subjectsID.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.subjectsID.errors?.required">Enter subjectsID</span>
+            <span [ngClass]="form.controls.subjectsID.errors?.minlength ? 'text-danger' : ''" *ngIf="form.controls.subjectsID.errors?.minlength">The minimum length is {{form.controls.subjectsID.errors.min.min}} characters: Current is {{form.controls.subjectsID.errors.min.min}}</span>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" aria-label="" for="tag">Tag</label>
+            <div class="col-md-6" aria-labelledby="tag" [ngClass]="form.controls.tag?.errors ? 'has-error' : 'has-success'">
+                <input type="text"
+                       class="form-control"
+                       id="tag"
+                       title="Add a tag for this assessment. This tags will be used to recollect this exams from the list. Since you can add more than one quiz, the tag will be used to find this session"
+                       formControlName="tag"
+                       placeholder="tag for the examination">
+            </div>
+            <span [ngClass]="form.controls.tag.errors?.maxlength ? 'text-danger' : ''" *ngIf="form.controls.tag.errors?.maxlength">The maximum length is {{form.controls.tag.errors.maxlength.requiredLength}} characters: Current is {{form.controls.tag.errors.maxlength.actualLength}}</span>
+            <span [ngClass]="form.controls.tag.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.tag.errors?.required">Enter tag</span>
+            <span [ngClass]="form.controls.tag.errors?.minlength ? 'text-danger' : ''" *ngIf="form.controls.tag.errors?.minlength">The minimum length is {{form.controls.tag.errors.minlength.requiredLength}} characters: Current is {{form.controls.tag.errors.minlength.actualLength}}</span>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" aria-label="" for="assessmentTypesID">Exam Type</label>
+            <div class="col-md-6" aria-labelledby="assessmentTypesID" [ngClass]="form.controls.assessmentTypesID?.errors ? 'has-error' : 'has-success'">
+                <select class="form-control"
+                        id="assessmentTypesID"
+                        title="select the exams type for which you are recording this score"
+                        formControlName="assessmentTypesID"
+                        placeholder="assessmentTypesID">
+                    <option [ngValue]="s.assessmentTypesID" *ngFor="let s of types">{{s.assessmentType}}</option>
+                </select>
+            </div>
+            <span [ngClass]="form.controls.assessmentTypesID.errors?.maxlength ? 'text-danger' : ''" *ngIf="form.controls.assessmentTypesID.errors?.maxlength">The maximum length is {{form.controls.assessmentTypesID.errors.max.max}} characters: Current is {{form.controls.assessmentTypesID.errors.max.max}}</span>
+            <span [ngClass]="form.controls.assessmentTypesID.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.assessmentTypesID.errors?.required">Select assessment type</span>
+            <span [ngClass]="form.controls.assessmentTypesID.errors?.minlength ? 'text-danger' : ''" *ngIf="form.controls.assessmentTypesID.errors?.minlength">The minimum length is {{form.controls.assessmentTypesID.errors.min.min}} characters: Current is {{form.controls.assessmentTypesID.errors.min.min}}</span>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" aria-label="" for="max">Max Score</label>
+            <div class="col-md-6" aria-labelledby="max" [ngClass]="form.controls.max?.errors ? 'has-error' : 'has-success'">
+                <input type="number" class="form-control"
+                       id="max"
+                       title="maximum score for which you are recording this score"
+                       formControlName="max"
+                       placeholder="max score" />
+            </div>
+            <span [ngClass]="form.controls.max.errors?.max ? 'text-danger' : ''" *ngIf="form.controls.max.errors?.max">The maximum {{form.controls.max.errors.max.max}}</span>
+            <span [ngClass]="form.controls.max.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.max.errors?.required">Enter maximum score</span>
+            <span [ngClass]="form.controls.max.errors?.min ? 'text-danger' : ''" *ngIf="form.controls.max.errors?.min">The minimum length is {{form.controls.max.errors.min.min}} characters: Current is {{form.controls.max.errors.min.min}}</span>
+        </div>
+    </fieldset>
+</form>
+<div class="col-md-offset-2"><button class="btn" (click)="this.status=!this.status" [disabled]="form.invalid" [ngClass]="status ? 'btn-primary' : 'btn-secondary'">{{status ? 'Continue' : 'Back'}}</button></div>
+
+<div class="row" [hidden]="status">
+    <div class="col-md-2">ID</div>
+    <div class="col-md-2">Index Number</div>
+    <div class="col-md-5">Name</div>
+    <div class="col-md-3">Score</div>
+</div>
+<form [hidden]="status" *ngFor="let f of res_form;let ix=index" [formGroup]="f" class="row table-striped form-horizontal">
+    <div class="col-md-2">
+        <input type="number" [attr.disabled]="true" formControlName="studentsID" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <input type="text" [attr.disabled]="true" class="form-control" formControlName="indexNumber" />
+    </div>
+    <div class="col-md-5">
+        <input type="text" [attr.disabled]="true" class="form-control" formControlName="name" />
+    </div>
+    <div class="col-md-3" aria-labelledby="score" [ngClass]="f.controls.score?.errors ? 'has-error' : 'has-success'">
+        <input type="number" class="form-control"
+               id="score"
+               title="Enter the student score for the exam"
+               formControlName="score"
+               placeholder="score for {{students[ix].name}}" />
+        <span [ngClass]="f.controls.score.touched && f.controls.score.errors?.max ? 'text-danger' : ''" *ngIf="f.controls.score.touched && f.controls.score.errors?.max">The maximum {{f.controls.score.errors.max.max}}</span>
+        <span [ngClass]="f.controls.score.touched && f.controls.score.errors?.required ? 'text-danger' : ''" *ngIf="f.controls.score.touched && f.controls.score.errors?.required">Enter score</span>
+        <span [ngClass]="f.controls.score.touched && f.controls.score.errors?.minlength ? 'text-danger' : ''" *ngIf="f.controls.score.touched && f.controls.score.errors?.min">The minimum is {{f.controls.score.errors.min.min}}</span>
+    </div>
+    <br />
+    <br />
+    <br />
+</form>
+<div class="btn-group" [hidden]="status">
+    <button title="Save button. If the actions are successful after clicking this button, you will be routed to the class page" aria-label="Save the results button" (click)="save(form,res_form)" class="btn" [ngClass]="form_valid() ? 'btn-success' : 'btn-danger'" [disabled]="!form_valid()"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
+</div>

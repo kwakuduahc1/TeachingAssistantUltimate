@@ -1,0 +1,96 @@
+﻿<h1 class="h1">Add Questions to the bank</h1>
+<dl class="dl-horizontal">
+    <dt>Subject</dt>
+    <dd>{{question.subject}}</dd>
+</dl>
+<div class="checkbox">
+    <label title="use a simple entry form to add a questions. Suitable for use with assisted technologies">
+        <input type="checkbox" (change)="useSimple()"> Use simple entry
+    </label>
+</div>
+<form id="form" *ngIf="!isSimple" name="form" [formGroup]="form" (submit)="add(form.value)" class="form-horizontal">
+    <fieldset>
+        <legend>Fill out this form</legend>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="topic">Topic</label>
+            <div class="col-md-6" [ngClass]="form.controls.topic?.errors ? 'has-error' : 'has-success'">
+                <input type="tel"
+                       class="form-control"
+                       id="topic"
+                       title="your user name here"
+                       formControlName="topic"
+                       placeholder="topic for this question">
+            </div>
+            <span [ngClass]="form.controls.topic.errors?.maxlength ? 'text-danger' : ''" *ngIf="form.controls.topic.errors?.maxlength">The maximum length is {{form.controls.topic.errors.maxlength.requiredLength}} characters: Current is {{form.controls.topic.errors.maxlength.actualLength}}</span>
+            <span [ngClass]="form.controls.topic.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.topic.errors?.required">Topic for question</span>
+            <span [ngClass]="form.controls.topic.errors?.minlength ? 'text-danger' : ''" *ngIf="form.controls.topic.errors?.minlength">The minimum length is {{form.controls.topic.errors.minlength.requiredLength}} characters: Current is {{form.controls.topic.errors.minlength.actualLength}}</span>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="question">Question</label>
+            <div class="col-md-6" [ngClass]="form.controls.question?.errors ? 'has-error' : 'has-success'">
+                <quill-editor id="question" formControlName="question">
+                </quill-editor>
+            </div>
+            <span [ngClass]="form.controls.question.errors?.maxlength ? 'text-danger' : ''" *ngIf="form.controls.question.errors?.maxlength">The maximum length is {{form.controls.question.errors.maxlength.requiredLength}} characters: Current is {{form.controls.question.errors.maxlength.actualLength}}</span>
+            <span [ngClass]="form.controls.question.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.question.errors?.required">Type your question including alternatives</span>
+            <span [ngClass]="form.controls.question.errors?.minlength ? 'text-danger' : ''" *ngIf="form.controls.question.errors?.minlength">The minimum length is {{form.controls.question.errors.minlength.requiredLength}} characters: Current is {{form.controls.question.errors.minlength.actualLength}}</span>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Set the options for this question<span class="text-warning">First option must always be the correct answer</span></legend>
+        <div class="form-group" *ngFor="let o of question.options;let ix=index">
+            <label for="opt[{{ix}}]" class="control-label col-md-2">Option {{ix+1}}</label>
+            <div class="col-md-6">
+                <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="question.options[ix].option" name="opt[{{ix}}]" id="opt[{{ix}}]" placeholder="option {{ix+1}}" />
+            </div>
+        </div>
+        <div class="col-md-offset-2 btn-group">
+            <button [disabled]="form.invalid || hand.processing" type="submit" [ngClass]="form.invalid ? 'btn-danger' : 'btn-success'" class="btn"><span class="glyphicon glyphicon-addition-sign"> Edit Question</span></button>
+        </div>
+        <div [ngClass]="hand.error ? 'alert-danger' : 'alert-info'">{{hand.message}}</div>
+    </fieldset>
+</form>
+<form id="form" *ngIf="isSimple" name="form" [formGroup]="form" (submit)="add(form.value)" class="form-horizontal">
+    <fieldset>
+        <legend>Fill out this form</legend>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="topic">Topic</label>
+            <div class="col-md-6" [ngClass]="form.controls.topic?.errors ? 'has-error' : 'has-success'">
+                <input type="text"
+                       class="form-control"
+                       id="topic"
+                       required
+                       style="speak:literal-punctuation"
+                       title="your user name here"
+                       formControlName="topic"
+                       placeholder="topic for this question">
+            </div>
+            <span [ngClass]="form.controls.topic.errors?.maxlength ? 'text-danger' : ''" *ngIf="form.controls.topic.errors?.maxlength">The maximum length is {{form.controls.topic.errors.maxlength.requiredLength}} characters: Current is {{form.controls.topic.errors.maxlength.actualLength}}</span>
+            <span [ngClass]="form.controls.topic.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.topic.errors?.required">Topic for question</span>
+            <span [ngClass]="form.controls.topic.errors?.minlength ? 'text-danger' : ''" *ngIf="form.controls.topic.errors?.minlength">The minimum length is {{form.controls.topic.errors.minlength.requiredLength}} characters: Current is {{form.controls.topic.errors.minlength.actualLength}}</span>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="question">Question</label>
+            <div class="col-md-6" [ngClass]="form.controls.question?.errors ? 'has-error' : 'has-success'">
+                <textarea class="form-control" title="Type the question here. This is a simple entry text box" placeholder="Simple entry question textbox. Auto focused after form submission" spellcheck="true" required style="speak:literal-punctuation; speech-rate:medium" name="question" id="question" formControlName="question">
+                </textarea>
+            </div>
+            <span [ngClass]="form.controls.question.errors?.maxlength ? 'text-danger' : ''" *ngIf="form.controls.question.errors?.maxlength">The maximum length is {{form.controls.question.errors.maxlength.requiredLength}} characters: Current is {{form.controls.question.errors.maxlength.actualLength}}</span>
+            <span [ngClass]="form.controls.question.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.question.errors?.required">Type your question including alternatives</span>
+            <span [ngClass]="form.controls.question.errors?.minlength ? 'text-danger' : ''" *ngIf="form.controls.question.errors?.minlength">The minimum length is {{form.controls.question.errors.minlength.requiredLength}} characters: Current is {{form.controls.question.errors.minlength.actualLength}}</span>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Options <span class="text-warning">First option must always be the correct answer</span></legend>
+        <div class="form-group" *ngFor="let o of question.options;let ix=index">
+            <label for="opt[{{ix}}]" class="control-label col-md-2">Option {{ix+1}}</label>
+            <div class="col-md-6">
+                <input type="text" style="speak:literal-punctuation" title="Option {{ix+1}} of the question. Required" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="question.options[ix].option" name="opt[{{ix}}]" required id="opt[{{ix}}]" placeholder="option {{ix+1}}" />
+            </div>
+        </div>
+        <div class="col-md-offset-2 btn-group">
+            <button [disabled]="form.invalid || hand.processing" title="Click to save the question with options. It is inactive if an input is invalid" type="submit" [ngClass]="form.invalid ? 'btn-danger' : 'btn-success'" class="btn"><span class="glyphicon glyphicon-addition-sign"> Edit Question</span></button>
+        </div>
+        <div [ngClass]="hand.error ? 'alert-danger' : 'alert-info'">{{hand.message}}</div>
+    </fieldset>
+</form>

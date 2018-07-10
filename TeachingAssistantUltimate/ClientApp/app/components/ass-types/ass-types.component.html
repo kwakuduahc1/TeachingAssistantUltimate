@@ -1,0 +1,65 @@
+﻿<title>Assessment Types</title>
+<h1>Assessment Types</h1>
+<details open class="glyphicon glyphicon-info-sign">
+    <p>Assessment types refers to the types of assessment that are organized for students e.g. quiz, midsem etc. If your school does not have an exam processing you, you can add exam as an assessment type in order to compile the final score sheet for you</p>
+</details>
+<form id="form" name="form" [formGroup]="form" (submit)="add(form.value)" class="form-horizontal">
+    <fieldset>
+        <legend>Add a new subject</legend>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="assessmentType">Type</label>
+            <div class="col-md-6" [ngClass]="form.controls.assessmentType?.errors ? 'has-error' : 'has-success'">
+                <input type="text"
+                       class="form-control"
+                       id="assessmentType"
+                       title="assessment type name here"
+                       formControlName="assessmentType"
+                       placeholder="Enter name of assessment type">
+            </div>
+            <span [ngClass]="form.controls.assessmentType.errors?.maxlength ? 'text-danger' : ''" *ngIf="form.controls.assessmentType.errors?.maxlength">The maximum length is {{form.controls.assessmentType.errors.maxlength.requiredLength}} characters: Current is {{form.controls.assessmentType.errors.maxlength.actualLength}}</span>
+            <span [ngClass]="form.controls.assessmentType.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.assessmentType.errors?.required">Enter assessmentType</span>
+            <span [ngClass]="form.controls.assessmentType.errors?.minlength ? 'text-danger' : ''" *ngIf="form.controls.assessmentType.errors?.minlength">The minimum length is {{form.controls.assessmentType.errors.minlength.requiredLength}} characters: Current is {{form.controls.assessmentType.errors.minlength.actualLength}}</span>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="total">Total</label>
+            <div class="col-md-6" [ngClass]="form.controls.total?.errors ? 'has-error' : 'has-success'">
+                <input type="text"
+                       class="form-control"
+                       id="total"
+                       title="Total marks for which this assessment will be converted to"
+                       formControlName="total"
+                       placeholder="Enter total score for this type">
+            </div>
+            <span [ngClass]="form.controls.total.errors?.maxlength ? 'text-danger' : ''" *ngIf="form.controls.total.errors?.max">The maximum allowed is {{form.controls.total.errors.max.max}}</span>
+            <span [ngClass]="form.controls.total.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.total.errors?.required">Enter total</span>
+            <span [ngClass]="form.controls.total.errors?.minlength ? 'text-danger' : ''" *ngIf="form.controls.total.errors?.minlength">The minimum value allowed is {{form.controls.total.errors.min.min}}</span>
+        </div>
+        <div class="col-md-offset-2 btn-group">
+            <button [disabled]="form.invalid || hand.processing" type="submit" [ngClass]="form.invalid ? 'btn-danger' : 'btn-success'" class="btn"><span class="glyphicon glyphicon-addition-sign"> Add</span></button>
+        </div>
+        <div [ngClass]="hand.error ? 'alert-danger' : 'alert-info'">{{hand.message}}</div>
+    </fieldset>
+</form>
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Total</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let t of types">
+            <td>{{t.assessmentType}}</td>
+            <td>{{t.total}}</td>
+            <td>
+                <button type="button" [routerLink]="['/edit-type',t.assessmentTypesID]" class="btn btn-link">Edit</button>
+            </td>
+            <td>
+                <button type="button" (click)="delete(t)" class="btn btn-danger">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

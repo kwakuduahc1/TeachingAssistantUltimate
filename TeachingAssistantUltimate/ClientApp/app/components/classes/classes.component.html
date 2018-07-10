@@ -1,0 +1,103 @@
+﻿<title>Classes</title>
+<h1 class="h1">Classes</h1>
+<form id="form" name="form" [formGroup]="form" (submit)="add(form.value)" class="form-horizontal">
+    <fieldset>
+        <legend>Add a new class</legend>
+        <div class="form-group">
+            <label class="col-md-2 control-label" aria-label="class name" for="className">Class</label>
+            <div class="col-md-6" aria-labelledby="className" [ngClass]="form.controls.className?.errors ? 'has-error' : 'has-success'">
+                <input type="text"
+                       class="form-control"
+                       id="className"
+                       title="className name here"
+                       formControlName="className"
+                       placeholder="class name">
+            </div>
+            <span [ngClass]="form.controls.className.errors?.maxlength ? 'text-danger' : ''" *ngIf="form.controls.className.errors?.maxlength">The maximum length is {{form.controls.className.errors.maxlength.requiredLength}} characters: Current is {{form.controls.className.errors.maxlength.actualLength}}</span>
+            <span [ngClass]="form.controls.className.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.className.errors?.required">Enter class name</span>
+            <span [ngClass]="form.controls.className.errors?.minlength ? 'text-danger' : ''" *ngIf="form.controls.className.errors?.minlength">The minimum length is {{form.controls.className.errors.minlength.requiredLength}} characters: Current is {{form.controls.className.errors.minlength.actualLength}}</span>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="indexPrefix" aria-label="index prefix">Prefix</label>
+            <div class="col-md-6" aria-labelledby="indexPrefix" [ngClass]="form.controls.indexPrefix?.errors ? 'has-error' : 'has-success'">
+                <input type="text"
+                       class="form-control"
+                       id="indexPrefix"
+                       title="the prefix to use to generate students index numbers"
+                       formControlName="indexPrefix"
+                       placeholder="The prefix to use to generate students index numbers">
+            </div>
+            <span [ngClass]="form.controls.indexPrefix.errors?.maxlength ? 'text-danger' : ''" *ngIf="form.controls.indexPrefix.errors?.maxlength">The maximum length is {{form.controls.indexPrefix.errors.maxlength.requiredLength}} characters: Current is {{form.controls.indexPrefix.errors.maxlength.actualLength}}</span>
+            <span [ngClass]="form.controls.indexPrefix.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.indexPrefix.errors?.required">Enter index number prefix</span>
+            <span [ngClass]="form.controls.indexPrefix.errors?.minlength ? 'text-danger' : ''" *ngIf="form.controls.indexPrefix.errors?.minlength">The minimum length is {{form.controls.indexPrefix.errors.minlength.requiredLength}} characters: Current is {{form.controls.indexPrefix.errors.minlength.actualLength}}</span>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="padding" aria-label="padding">Padding</label>
+            <div class="col-md-6" aria-labelledby="padding" [ngClass]="form.controls.padding?.errors ? 'has-error' : 'has-success'">
+                <input type="number"
+                       class="form-control"
+                       id="padding"
+                       title="the number of zeros to pad single numbers with. e.g. if students index number is 1, and padding is 2, it will be written as 001"
+                       formControlName="padding"
+                       placeholder="Zeros to pad number with">
+            </div>
+            <span [ngClass]="form.controls.padding.errors?.max ? 'text-danger' : ''" *ngIf="form.controls.padding.errors?.max">The maximum is {{form.controls.padding.errors.max.max}}</span>
+            <span [ngClass]="form.controls.padding.errors?.required ? 'text-danger' : ''" *ngIf="form.controls.padding.errors?.required">Enter index number prefix</span>
+            <span [ngClass]="form.controls.padding.errors?.min ? 'text-danger' : ''" *ngIf="form.controls.padding.errors?.min">The minimum length is {{form.controls.padding.errors.min.min}}</span>
+        </div>
+        <div class="col-md-offset-2 btn-group">
+            <button [disabled]="form.invalid || hand.processing" type="submit" [ngClass]="form.invalid ? 'btn-danger' : 'btn-success'" class="btn"><span class="glyphicon glyphicon-addition-sign"> Add Class</span></button>
+        </div>
+        <div [ngClass]="hand.error ? 'alert-danger' : 'alert-info'">{{hand.message}}</div>
+    </fieldset>
+</form>
+
+<h2 class="h2">Your saved subjects</h2>
+<table class="table table-responsive table-condensed table-striped">
+    <thead>
+        <tr>
+            <th>Class</th>
+            <th>Prefix</th>
+            <th>Padding</th>
+            <th>Students</th>
+            <th>Upload Excel File</th>
+            <th>Add single</th>
+            <th>Add Results</th>
+            <th>Smart Entry</th>
+            <th>Edit Results</th>
+            <th>Print Results</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let c of classes">
+            <td>{{c.className}}</td>
+            <td>{{c.indexPrefix}}</td>
+            <td>{{c.padding}}</td>
+            <td>{{c.count}}</td>
+            <td>
+                <input class="form-control" type="file" (change)="onFileChange($event, c)" />
+            </td>
+            <td></td>
+            <td>
+                <button [disabled]="c.count<1" type="button" class="btn btn-primary" [routerLink]="['/add-results',c.classesID]"><span class="glyphicon glyphicon-map-marker"></span> Add Results</button>
+            </td>
+            <td>
+                <button [disabled]="c.count<1" title="Smart entry allows you to enter results in no particular order. Just pick a sheet, enter the number and the score and the computer will find the student with that index number and assign the score appropriately" type="button" class="btn btn-secondary" [routerLink]="['/smart-entry',c.classesID]"><span class="glyphicon glyphicon-stats"></span> Smart Entry</button>
+            </td>
+            <td>
+                <button [disabled]="c.count<1" title="View and modify results entry." type="button" class="btn btn-success" [routerLink]="['/tag-results',c.classesID]"><span class="glyphicon glyphicon-globe"></span> Edit Results</button>
+            </td>
+            <td>
+                <button [disabled]="c.count<1" type="button" class="btn btn-default" [routerLink]="['/view-results',c.classesID]"><span class="glyphicon glyphicon-print"></span> Print Results</button>
+            </td>
+            <td>
+                <button type="button" [routerLink]="['/edit-class',c.classesID]" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+            </td>
+            <td>
+                <button type="button" (click)="delete(c)" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span>  Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

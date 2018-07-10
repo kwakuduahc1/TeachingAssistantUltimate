@@ -1,0 +1,23 @@
+﻿<h1 class="h1 text-center">Manage your questions</h1>
+<table class="table table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Question</th>
+            <th colspan="4">Options</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let q of questions">
+            <td [innerHtml]="q.question"></td>
+            <td *ngFor="let o of q.options">{{o.option}}</td>
+            <td>
+                <button type="button" [routerLink]="['/edit-question',q.questionsID]" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+            </td>
+            <td>
+                <button type="button" (click)="delete(q)" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span>  Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,33 @@
+﻿<title>View student results</title>
+<h1>View Students Results</h1>
+<dl class="dl-horizontal h3">
+    <dt>Class</dt>
+    <dd>{{_class.className}}</dd>
+</dl>
+<div class="form-group row">
+    <label class="col-md-2 control-label" for="subject" aria-label="subject">Select Subject</label>
+    <div class="col-md-4">
+        <select type="text" (change)="get(subject)" [(ngModel)]="subject" aria-labelledby="subject" aria-required="true" aria-relevant="all" class="form-control" id="subject" placeholder="Select Subject">
+            <option *ngFor="let s of subjects" [ngValue]="s.subjectsID">{{s.subject}}</option>
+        </select>
+    </div>
+</div>
+<div class="btn-group row" [hidden]="results.results.length<1">
+    <button (click)="print()" class="btn btn-primary"><span class="glyphicon glyphicon-print"></span> Print</button>
+</div>
+<table [hidden]="results.results.length<1" class="table table-striped table-hover table-bordered" id="print">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Index Number</th>
+            <th *ngFor="let t of results!.types">{{t.assessmentType}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let r of results!.results">
+            <td>{{r.name}}</td>
+            <td>{{r.indexNumber}}</td>
+            <td *ngFor="let s of r!.results">{{s.sumScore}}</td>
+        </tr>
+    </tbody>
+</table>
