@@ -5,10 +5,10 @@
   "version": "1.2.0",
   "author": "Ibrahim Kwaku Duah",
   "contributors": [ "https://github.com/kwakuduahc1" ],
-  "homepage": "https://github.com/kwakuduahc1/Teaching-Assistant-Ultimate",
+  "homepage": "https://github.com/kwakuduahc1/TeachingAssistantUltimate",
   "keywords": [ "tutor", "teachers", "teaching assistant", "question bank", "process student results" ],
   "readme": "Read Me.md",
-  "repository": "https://github.com/kwakuduahc1/Teaching-Assistant-Ultimate.git",
+  "repository": "https://github.com/kwakuduahc1/TeachingAssistantUltimate.git",
   "scripts": {
     "test": "karma start ClientApp/test/karma.conf.js"
   },
