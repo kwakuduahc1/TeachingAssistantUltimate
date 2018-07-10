@@ -17,7 +17,7 @@ export class PrintProviderService {
             pageTitle: title,              // add title to print page
             removeInline: false,        // remove all inline styles from print elements
             printDelay: 30,            // variable print delay; depending on complexity a higher value may be necessary
-            header: `<h1>${title}</h1>`,               // prefix to html
+            header: `<br /> <br /><h1 class="h1">${title}</h1>`,               // prefix to html
             footer: `<footer>Teaching Assistant Ultimate</footer>`,               // postfix to html
             base: false,               // preserve the BASE tag, or accept a string for the URL
             formValues: true,           // preserve input/form values

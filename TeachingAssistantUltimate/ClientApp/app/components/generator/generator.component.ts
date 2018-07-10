@@ -42,7 +42,7 @@ export class GeneratorComponent {
         this.http.genQuestions(vm).subscribe(x => this.setQuestions(x));
     }
 
-    print(head: string): void {
-        this.printer.print(head);
+    print(): void {
+        this.printer.print(`${this.subject.subject} : ${this.subject.subjectCode}`);
     }
 }

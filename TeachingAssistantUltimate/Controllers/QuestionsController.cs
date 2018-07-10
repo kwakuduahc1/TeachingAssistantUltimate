@@ -32,11 +32,12 @@ namespace CampusConnectApp.Controllers
         public async Task<IEnumerable> TopicQuestions(string topic, int sid) => await new ApplicationDbContext(dco).Questions.Where(x => x.Topic == topic && x.SubjectsID == sid).Include(x => x.Options).Select(x => new { x.Concurrency, x.DateAdded, x.Options, x.Question, x.QuestionsID, x.Subjects.Subject, x.Subjects.SubjectCode, x.Topic }).ToListAsync();
 
         [HttpGet]
-        public async Task<IEnumerable> Topics(int id) => await new ApplicationDbContext(dco).Subjects.Where(x => x.SubjectsID == id).Select(x => new { Topic = x.Questions.Select(t => t.Topic), Number = x.Questions.Count(t => t.SubjectsID == x.SubjectsID) }).Distinct().ToListAsync();
+        public async Task<IEnumerable> Topics(int id) => await new ApplicationDbContext(dco).Questions.Where(x => x.SubjectsID == id).Select(x => new { x.Topic, Number = 0 }).Distinct().ToListAsync();
 
         [HttpPost]
         public async Task<IEnumerable> Generate([FromBody]GeneratorVm vm)
         {
+            var body = Request.Body;
             var questions = new List<TestVm>();
             using (var db = new ApplicationDbContext(dco))
             {
@@ -90,12 +91,12 @@ namespace CampusConnectApp.Controllers
             {
                 if (!await db.Questions.AnyAsync(x => x.QuestionsID == question.QuestionsID))
                     return BadRequest(new { Message = "Question does not exists to be edited" });
-                //  db.Entry(question).State = EntityState.Modified;
+                // db.Entry(question).State = EntityState.Modified;
                 db.Update(question);
-                //  question.Options.ToList().ForEach(x => db.Entry(x).State = EntityState.Modified);
+                //question.Options.ToList().ForEach(x => db.Entry(x).State = EntityState.Modified);
                 await db.SaveChangesAsync();
             }
-            return Ok(question);
+            return Ok(new { question.Concurrency, question.DateAdded, question.Question, question.QuestionsID, question.SubjectsID, question.Topic, Options = question.Options.Select(x => new { x.Option, x.OptionsID }) });
         }
 
         [HttpPost]

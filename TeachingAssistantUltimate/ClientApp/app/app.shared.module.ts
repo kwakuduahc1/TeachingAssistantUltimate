@@ -108,7 +108,7 @@ import { HelpComponent } from './components/help/help.component';
             { path: 'edit-subject/:id', component: EditSubjectComponent, resolve: { subject: SubjectResolver } },
             { path: 'add-question/:id', component: QuestionsComponent, resolve: { subject: SubjectResolver } },
             { path: 'edit-question/:id', component: EditQuestionComponent, resolve: { question: QuestionResolver } },
-            { path: 'topic-questions/:top/:id', component: TopicQuestionsComponent, resolve: { questions: TopicQuestionsResolver, "class": ClassResolver } },
+            { path: 'topic-questions/:top/:id', component: TopicQuestionsComponent, resolve: { questions: TopicQuestionsResolver } },
             { path: 'generate/:id', component: GeneratorComponent, resolve: { subject: SubjectResolver, topics: TopicsResolver } },
             { path: 'types', component: AssTypesComponent, resolve: { types: AssTypesResolver } },
             { path: 'edit-type/:id', component: EditAssTypeComponent, resolve: { type: AssTypeResolver } },

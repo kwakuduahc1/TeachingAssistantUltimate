@@ -41,11 +41,7 @@
     </tfoot>
 </table>
 <div class="btn-group" *ngIf="questions.length>0">
-    <button (click)="print(header)" class="btn btn-primary"><span class="glyphicon glyphicon-print"></span> Print</button>
-</div>
-<div class="input-group" *ngIf="questions.length>0">
-    <span class="input-group-addon" id="head.span" title="Set header for printing">Header </span>
-    <input type="text" class="form-control" id="header" name="header" [(ngModel)]="header" required placeholder="Header for printing">
+    <button (click)="print()" class="btn btn-primary"><span class="glyphicon glyphicon-print"></span> Print</button>
 </div>
 <div id="print" *ngIf="questions.length>0">
     <ol>
