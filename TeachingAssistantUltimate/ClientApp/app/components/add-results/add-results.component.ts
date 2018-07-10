@@ -69,6 +69,7 @@ export class AddResultsComponent {
             tag:fm.value['tag']
         } as IResults));
         this.http.add(res).subscribe((res: IResultsDisplay[]) => {
+            alert("Results were saved in the database successfully");
             this.router.navigate(['/classes']);
         }, (err: HttpErrorResponse) => this.hand.handleError(err));
     }

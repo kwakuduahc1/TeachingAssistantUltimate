@@ -4,9 +4,17 @@
   "description": "Software for tutors for tertiary education to manage their questions and record student results",
   "version": "1.2.0",
   "author": "Ibrahim Kwaku Duah",
-  "contributors": [ "https://github.com/kwakuduahc1" ],
+  "contributors": [
+    "https://github.com/kwakuduahc1"
+  ],
   "homepage": "https://github.com/kwakuduahc1/TeachingAssistantUltimate",
-  "keywords": [ "tutor", "teachers", "teaching assistant", "question bank", "process student results" ],
+  "keywords": [
+    "tutor",
+    "teachers",
+    "teaching assistant",
+    "question bank",
+    "process student results"
+  ],
   "readme": "Read Me.md",
   "repository": "https://github.com/kwakuduahc1/TeachingAssistantUltimate.git",
   "scripts": {

@@ -2,7 +2,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IStudents } from '../../model/IStudents';
 import { IResults } from '../../model/IResults';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IClasses } from '../../model/IClasses';
 import { HttpHandler } from '../../providers/HttpHandler';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -27,7 +27,7 @@ export class SmartEntryComponent {
     types: IAssTypes[]
     maxScore: number = 20;
     canUpload: boolean = false;
-    constructor(private http: ResultsHttpProvider, fb: FormBuilder, route: ActivatedRoute, public hand: HttpHandler) {
+    constructor(private http: ResultsHttpProvider, private router:Router, fb: FormBuilder, route: ActivatedRoute, public hand: HttpHandler) {
         this.form = this.initForm(fb);
         this.students = route.snapshot.data["students"];
         this._class = route.snapshot.data["class"];
@@ -99,7 +99,7 @@ export class SmartEntryComponent {
                     }
                 });
 
-                alert("Results have been prepared. Kindly click on the upload button.\nAlternative press the space bar or enter if you are using any assisstive technology after you have dismissed this alert by pressing the escape key");
+                alert("Results have been prepared. Kindly click on the upload button.\nAlternative press the space bar or enter if you are using any assistive technology after you have dismissed this alert by pressing the escape key");
                 this.canUpload = true;
                 let but = document.getElementById('upload') as HTMLButtonElement;
                 but.focus();
@@ -113,7 +113,8 @@ export class SmartEntryComponent {
 
     addResults() {
         this.http.add(this.results).subscribe((res: IResultsDisplay[]) => {
-
+            alert("Results were loaded to the database successfully");
+            this.router.navigate(['/classes']);
         }, (err: HttpErrorResponse) => this.hand.handleError(err));
     }
 
