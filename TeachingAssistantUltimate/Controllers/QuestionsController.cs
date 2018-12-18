@@ -1,12 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TeachingAssistantUltimate.Context;
+﻿using TeachingAssistantUltimate.Context;
 using TeachingAssistantUltimate.Model;
 using TeachingAssistantUltimate.Model.ViewModels;
 
@@ -32,7 +24,7 @@ namespace CampusConnectApp.Controllers
         public async Task<IEnumerable> TopicQuestions(string topic, int sid) => await new ApplicationDbContext(dco).Questions.Where(x => x.Topic == topic && x.SubjectsID == sid).Include(x => x.Options).Select(x => new { x.Concurrency, x.DateAdded, x.Options, x.Question, x.QuestionsID, x.Subjects.Subject, x.Subjects.SubjectCode, x.Topic }).ToListAsync();
 
         [HttpGet]
-        public async Task<IEnumerable> Topics(int id) => await new ApplicationDbContext(dco).Questions.Where(x => x.SubjectsID == id).Select(x => new { x.Topic, Number = 0 }).Distinct().ToListAsync();
+        public async Task<IEnumerable> Topics(int id) => await new ApplicationDbContext(dco).Questions.Where(x => x.SubjectsID == id).Select(x => new { x.Topic, Number = 0 }).OrderBy(x => x.Topic).Distinct().ToListAsync();
 
         [HttpPost]
         public async Task<IEnumerable> Generate([FromBody]GeneratorVm vm)
@@ -49,7 +41,7 @@ namespace CampusConnectApp.Controllers
                                     WHERE s.SubjectsID = @subject AND q.topic = @topic
                                     ORDER BY RANDOM() LIMIT @num ";
                     var quest = await db.Questions.FromSql(qry, new SqliteParameter("@subject", vm.SubjectsID), new SqliteParameter("@topic", top.Topic), new SqliteParameter("@num", top.Number))
-                        .Select(x => new TestVm { Question = x.Question, Options = x.Options.Select(t => t.Option) })
+                        .Select(x => new TestVm { Question = x.Question, Options = x.Options.OrderBy(t => t.Option).Select(t => t.Option) })
                         .ToListAsync();
                     questions.AddRange(quest);
                 }
@@ -65,6 +57,7 @@ namespace CampusConnectApp.Controllers
                 return BadRequest(new { Error = "Invalid data was submitted", Message = ModelState.Values.First(x => x.Errors.Count > 0).Errors.Select(t => t.ErrorMessage).First() });
             question.QuestionsID = Guid.NewGuid();
             question.DateAdded = DateTime.Now;
+            question.Options = question.Options.OrderBy(x => x.Option);
             foreach (var item in question.Options)
             {
                 item.IsAnswer = false;

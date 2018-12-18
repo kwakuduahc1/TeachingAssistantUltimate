@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="col-md-offset-3 btn-group">
-            <button [disabled]="form.invalid || hand.processing" type="submit" [ngClass]="form.invalid ? 'btn-danger' : 'btn-success'" class="btn"><span class="glyphicon glyphicon-addition-sign"> Add Subject</span></button>
+            <button [disabled]="form.invalid || hand.processing" type="submit" [ngClass]="form.invalid ? 'btn-danger' : 'btn-success'" class="btn"><span class="glyphicon glyphicon-addition-sign"> Add Question</span></button>
         </div>
         <div [ngClass]="hand.error ? 'alert-danger' : 'alert-info'">{{hand.message}}</div>
     </fieldset>
@@ -65,14 +65,14 @@
     <fieldset>
         <legend>Fill out this form</legend>
         <div class="form-group">
-            <label class="col-md-2 control-label" for="topic">Topic</label>
+            <label class="col-md-2 control-label" aria-label="topic for this question" for="topic">Topic</label>
             <div class="col-md-6" [ngClass]="form.controls.topic?.errors ? 'has-error' : 'has-success'">
-                <input type="text"
+                <input aria-labelledby="topic" type="text"
                        class="form-control"
                        id="topic"
                        required
                        style="speak:literal-punctuation"
-                       title="your user name here"
+                       title="Add the topic for which this question covers"
                        formControlName="topic"
                        placeholder="topic for this question">
             </div>
@@ -109,7 +109,7 @@
             </div>
         </div>
         <div class="col-md-offset-2 btn-group">
-            <button [disabled]="form.invalid || hand.processing" title="Click to save the question with options. It is inactive if an input is invalid" type="submit"  [ngClass]="form.invalid ? 'btn-danger' : 'btn-success'" class="btn"><span class="glyphicon glyphicon-addition-sign"> Add Subject</span></button>
+            <button [disabled]="form.invalid || hand.processing" title="Click to save the question with options. It is inactive if an input is invalid" type="submit"  [ngClass]="form.invalid ? 'btn-danger' : 'btn-success'" class="btn"><span class="glyphicon glyphicon-addition-sign"> Add Question</span></button>
         </div>
         <div [ngClass]="hand.error ? 'alert-danger' : 'alert-info'">{{hand.message}}</div>
     </fieldset>

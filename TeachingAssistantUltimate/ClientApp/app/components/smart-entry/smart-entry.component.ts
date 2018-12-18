@@ -27,7 +27,7 @@ export class SmartEntryComponent {
     types: IAssTypes[]
     maxScore: number = 20;
     canUpload: boolean = false;
-    constructor(private http: ResultsHttpProvider, private router:Router, fb: FormBuilder, route: ActivatedRoute, public hand: HttpHandler) {
+    constructor(private http: ResultsHttpProvider, private router: Router, fb: FormBuilder, route: ActivatedRoute, public hand: HttpHandler) {
         this.form = this.initForm(fb);
         this.students = route.snapshot.data["students"];
         this._class = route.snapshot.data["class"];
@@ -42,7 +42,7 @@ export class SmartEntryComponent {
             type: ["", Validators.compose([Validators.required, Validators.min(1)])],
             tag: ["", Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(20)])],
             sid: ["", Validators.compose([Validators.required, Validators.min(1)])],
-            max: [this.maxScore, Validators.compose([Validators.required, Validators.min(1)])]
+            max: [this.maxScore, Validators.compose([Validators.required, Validators.min(1), Validators.max(100)])]
         });
     }
 
@@ -50,7 +50,7 @@ export class SmartEntryComponent {
         return `${this._class.indexPrefix}${this.getPad(num)}`;
     }
 
-    addScore(res: { number: string, score: number, type: number, sid: number, tag: string }) {
+    addScore(res: { number: string, score: number, type: number, sid: number, tag: string, max: number }) {
         let ixn = this.getIx(res.number);
         let std: IStudents = this.students.find(x => x.indexNumber === ixn) as IStudents;
         if (!std)
@@ -64,6 +64,9 @@ export class SmartEntryComponent {
             alert("Results for this student has previously been added");
             this.focus();
             return;
+        }
+        else if (res.score > res.max) {
+
         }
         else {
             let _res: IResultsEntry = {

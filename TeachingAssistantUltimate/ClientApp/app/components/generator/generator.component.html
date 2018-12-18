@@ -10,9 +10,9 @@
     The total of the options should be equal to hundred
 </details>
 <div class="form-group">
-    <label class="control-label col-md-3">Total Questions</label>
+    <label aria-label="Maximum number of question to generate" for="max" class="control-label col-md-3">Total Questions</label>
     <div class="col-md-3">
-        <input class="form-control" placeholder="the maximum number of questions to fetch. Must be equal to the sum of questions to fetch from each topic" title="the maximum number of questions to fetch. Must be equal to the sum of questions to fetch from each topic" [(ngModel)]="max" type="number" />
+        <input class="form-control" aria-labelledby="max" id="max" placeholder="the maximum number of questions to fetch. Must be equal to the sum of questions to fetch from each topic" title="the maximum number of questions to fetch. Must be equal to the sum of questions to fetch from each topic" [(ngModel)]="max" type="number" />
     </div>
 </div>
 <table class="table table-responsive table-striped">
@@ -26,17 +26,17 @@
     <tbody>
         <tr *ngFor="let t of topics;let ix=index">
             <td>
-                <label class="label-info">{{t.topic}}</label>
+                <label for="number{{ix}}" id="topic_label" aria-label="topic" class="label-info">{{t.topic}}</label>
             </td>
             <td>
-                <input type="number" placeholder="" class="form-control" name="number{{ix}}" id="number{{ix}}" [(ngModel)]="t.number" />
+                <input type="number" required aria-required="true" aria-relevant="text" aria-valuemin="0" aria-labelledby="topic_label" placeholder="Number of questions to generate for topic : {{t.topic}}" class="form-control" name="number{{ix}}" id="number{{ix}}" [(ngModel)]="t.number" />
             </td>
         </tr>
     </tbody>
     <tfoot>
         <tr>
             <td></td>
-            <td> <button class="btn" [ngClass]="total() ? 'btn-success' : 'btn-danger'" [disabled]="!total()" (click)="generate(topics)">Generate</button></td>
+            <td> <button aria-relevant="text" aria-label="Valid if the total number of question is equal to the maximum number of questions" title="Generate question button" class="btn" [ngClass]="total() ? 'btn-success' : 'btn-danger'" [disabled]="!total()" (click)="generate(topics)">Generate</button></td>
         </tr>
     </tfoot>
 </table>
