@@ -1,4 +1,12 @@
-﻿using TeachingAssistantUltimate.Context;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using TeachingAssistantUltimate.Context;
 using TeachingAssistantUltimate.Model;
 using TeachingAssistantUltimate.Model.ViewModels;
 
@@ -57,7 +65,6 @@ namespace CampusConnectApp.Controllers
                 return BadRequest(new { Error = "Invalid data was submitted", Message = ModelState.Values.First(x => x.Errors.Count > 0).Errors.Select(t => t.ErrorMessage).First() });
             question.QuestionsID = Guid.NewGuid();
             question.DateAdded = DateTime.Now;
-            question.Options = question.Options.OrderBy(x => x.Option);
             foreach (var item in question.Options)
             {
                 item.IsAnswer = false;
